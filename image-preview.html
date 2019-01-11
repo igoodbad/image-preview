@@ -1,0 +1,68 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="image-preview">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .preview{
+        max-height: 300px;
+      }
+      .inputUrl{
+        width: 100%;
+      }
+    </style>
+    <h2>A simple preview image</h2>
+    <p>
+      <label>Insert url image</label>
+      <input id="urlImage" class="inputUrl" type="text" value="" /> <button type="button" on-click="_showImage">Preview</button>
+    </p>
+    <p>
+      <label>Drag and Drop image</label>
+      <input id="fileImage" class="inputUrl" type="file" value="" on-change="_setImagePreview" />
+    </p>
+    <p>
+      <image id="previewElement" class="preview" src="" />
+    </p>
+  </template>
+
+  <script>
+    /**
+     * `image-preview`
+     * Image preview
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class ImagePreview extends Polymer.Element {
+      static get is() { return 'image-preview'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'image-preview'
+          }
+        };
+      }
+
+      _showImage() {
+        const urlImage = this.$.urlImage;
+        const imgElement = this.$.previewElement;
+        imgElement.src = urlImage.value;
+        console.log()
+      }
+
+      _setImagePreview(){
+        const imageSource = this.$.fileImage;
+        const navegador = window.URL || window.webkitURL;
+        const objeto_url = navegador.createObjectURL(imageSource.files[0]);
+        const imagePreview = this.$.previewElement;
+        imagePreview.src = objeto_url;
+      }
+    }
+
+    window.customElements.define(ImagePreview.is, ImagePreview);
+  </script>
+</dom-module>
